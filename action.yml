@@ -1,0 +1,19 @@
+name: Setup Starknet Foundry
+description: Sets up Starknet Foundry in your GitHub Actions workflow
+author: Foundry
+branding:
+  color: blue
+  icon: activity
+inputs:
+  starknetfoundry-version:
+    description: SnFoundry version to use
+    required: false
+outputs:
+  starknet-foundry-prefix:
+    description: The prefix of the installed SnFoundry
+  starknet-foundry-version:
+    description: The version of the installed SnFoundry
+runs:
+  using: "node18"
+  main: "dist/setup/index.js"
+  post-if: success()
