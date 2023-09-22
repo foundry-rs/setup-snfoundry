@@ -29,6 +29,6 @@ jobs:
 
 - `starknet-foundry-prefix` - A path to where Starknet Foundry has been extracted to. The `snforge`and `sncast` binaries will be located in the `bin`
   subdirectory (`${{ steps.setup-starknet-foundry.outputs.starknet-foundry-prefix }}/bin`).
-- `starknet-foundry-version` - Installed SnForge version (as reported by `snforge -V`).
+- `starknet-foundry-version` - Installed SnFoundry version (as reported by `snforge -V`).
 
 [SnFoundry]: https://foundry-rs.github.io/starknet-foundry
