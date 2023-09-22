@@ -22,7 +22,7 @@ jobs:
 
 ## Inputs
 
-- `starknet-foundry-version` - **Optional**. String, either:
+- `starknet-foundry-version` - **Optional**. String:
   - Stating an explicit SnFoundry version to use, for example `"0.6.0"`.
 
 ## Outputs
