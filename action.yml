@@ -5,7 +5,7 @@ branding:
   color: blue
   icon: activity
 inputs:
-  starknetfoundry-version:
+  starknet-foundry-version:
     description: SnFoundry version to use
     required: false
 outputs:
