@@ -6,13 +6,13 @@ branding:
   icon: activity
 inputs:
   starknet-foundry-version:
-    description: SnFoundry version to use
+    description: Starknet Foundry version to use
     required: false
 outputs:
   starknet-foundry-prefix:
-    description: The prefix of the installed SnFoundry
+    description: The prefix of installed Starknet Foundry
   starknet-foundry-version:
-    description: The version of the installed SnFoundry
+    description: The version of installed Starknet Foundry
 runs:
   using: "node18"
   main: "dist/setup/index.js"
