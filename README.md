@@ -1,6 +1,6 @@
-# Install SnFoundry
+# Install Starknet Foundry
 
-Sets up [SnFoundry] in your GitHub Actions workflow supporting caching out of the box.
+Sets up [Starknet Foundry] in your GitHub Actions workflow supporting caching out of the box.
 
 ## Example workflow
 
@@ -15,20 +15,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: foundry-rs/setup-snfoundry@v1
-        with:
-          starnet-foundry-version: "0.6.0"
       - run: snforge
 ```
 
 ## Inputs
 
 - `starknet-foundry-version` - **Optional**. String:
-  - Stating an explicit SnFoundry version to use, for example `"0.6.0"`.
+  - Stating an explicit Starknet Foundry version to use, for example `"0.8.3"`.
 
 ## Outputs
 
 - `starknet-foundry-prefix` - A path to where Starknet Foundry has been extracted to. The `snforge`and `sncast` binaries will be located in the `bin`
   subdirectory (`${{ steps.setup-starknet-foundry.outputs.starknet-foundry-prefix }}/bin`).
-- `starknet-foundry-version` - Installed SnFoundry version (as reported by `snforge -V`).
+- `starknet-foundry-version` - Version of Starknet Foundry that was installed (as reported by `snforge -V`).
 
-[SnFoundry]: https://foundry-rs.github.io/starknet-foundry
+[Starknet Foundry]: https://foundry-rs.github.io/starknet-foundry
