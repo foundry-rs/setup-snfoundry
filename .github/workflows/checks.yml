@@ -29,6 +29,8 @@ jobs:
 
       - name: Test local action
         uses: ./
+        with:
+          starknet-foundry-version: 0.8.3
 
       - run: snforge --init myproject
       - run: snforge
