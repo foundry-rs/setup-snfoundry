@@ -37,5 +37,9 @@ jobs:
         with:
           starknet-foundry-version: 0.8.3
 
-      - run: snforge --init myproject
-      - run: snforge
+      - name: Create new project
+        run: snforge --init myproject
+
+      - name: Run tests in the project
+        run: snforge
+        working-directory: myproject
