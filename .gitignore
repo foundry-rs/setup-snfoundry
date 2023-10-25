@@ -57,5 +57,4 @@ out
 .yarn/install-state.gz
 .pnp.*
 pnpm-lock.yaml
-dist/
 .idea
