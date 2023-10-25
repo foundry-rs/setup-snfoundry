@@ -6801,6 +6801,63 @@ async function getFullVersionFromStarknetFoundry() {
   return match[1];
 }
 
+async function determineVersion(version, repo) {
+  version = version?.trim();
+  version = version ?? "latest";
+
+  if (version === "latest") {
+    version = await fetchLatestTag(repo);
+  }
+
+  if (version.startsWith("v")) {
+    version = version.substring(1);
+  }
+
+  return version;
+}
+
+function fetchLatestTag(repo) {
+  // Note: Asking GitHub API for latest release information is the simplest solution here, but has one major drawback:
+  // it tends to trigger rate limit errors when run on GitHub actions hosted runners. This method performs requests
+  // against GitHub website, which does not rate limit so aggressively. We also never ask for nor download response
+  // body, which means that this technique should be theoretically much faster.
+  return core.group(
+    "Getting information about latest Scarb release from GitHub",
+    async () => {
+      const http = new HttpClient("software-mansion/setup-scarb", undefined, {
+        allowRedirects: false,
+      });
+
+      const requestUrl = `https://github.com/${repo}/releases/latest`;
+      core.debug(`HEAD ${requestUrl}`);
+      const res = await http.head(requestUrl);
+
+      if (res.message.statusCode < 300 || res.message.statusCode >= 400) {
+        throw new Error(
+          `failed to determine latest version: expected releases request to redirect, instead got http status: ${res.message.statusCode}`,
+        );
+      }
+
+      const location = res.message.headers.location;
+      core.debug(`Location: ${location}`);
+      if (!location) {
+        throw new Error(
+          `failed to determine latest version: releases request response misses 'location' header`,
+        );
+      }
+
+      const tag = location.replace(/.*\/tag\/(.*)(?:\/.*)?/, "$1");
+      if (!tag) {
+        throw new Error(
+          `failed to determine latest version: could not extract tag from release url`,
+        );
+      }
+
+      return tag;
+    },
+  );
+}
+
 function versionWithPrefix(version) {
   return /^\d/.test(version) ? `v${version}` : version;
 }
@@ -6812,7 +6869,7 @@ var external_path_default = /*#__PURE__*/__nccwpck_require__.n(external_path_);
 const promises_namespaceObject = require("fs/promises");
 var promises_default = /*#__PURE__*/__nccwpck_require__.n(promises_namespaceObject);
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
-var core = __nccwpck_require__(2186);
+var lib_core = __nccwpck_require__(2186);
 // EXTERNAL MODULE: ./node_modules/@actions/tool-cache/lib/tool-cache.js
 var tool_cache = __nccwpck_require__(7784);
 // EXTERNAL MODULE: external "os"
@@ -6868,7 +6925,7 @@ async function downloadStarknetFoundry(repo, version) {
   const extension = triplet.includes("-windows-") ? "zip" : "tar.gz";
   const url = `https://github.com/${repo}/releases/download/${tag}/${basename}.${extension}`;
 
-  core.info(`Downloading Starknet Foundry from ${url}`);
+  lib_core.info(`Downloading Starknet Foundry from ${url}`);
   const pathToTarball = await tool_cache.downloadTool(url);
 
   const extract = url.endsWith(".zip") ? tool_cache.extractZip : tool_cache.extractTar;
@@ -6876,7 +6933,7 @@ async function downloadStarknetFoundry(repo, version) {
 
   const pathToCli = await findStarknetFoundryDir(extractedPath);
 
-  core.debug(`Extracted to ${pathToCli}`);
+  lib_core.debug(`Extracted to ${pathToCli}`);
   return pathToCli;
 }
 
@@ -6904,15 +6961,16 @@ async function findStarknetFoundryDir(extractedPath) {
 
 async function main() {
   try {
-    const StarknetFoundryVersionInput = core.getInput("version");
+    const StarknetFoundryVersionInput = lib_core.getInput("version");
 
-    const { repo: StarknetFoundryRepo, version: StarknetFoundryVersion } = {
-      rep: "foundry-rs/starknet-foundry",
-      version: StarknetFoundryVersionInput,
-    };
+    const StarknetFoundryRepo = "foundry-rs/starknet-foundry";
+    const StarknetFoundryVersion = await determineVersion(
+      StarknetFoundryVersionInput,
+      StarknetFoundryRepo,
+    );
 
     const triplet = getOsTriplet();
-    await core.group(
+    await lib_core.group(
       `Setting up Starknet Foundry ${versionWithPrefix(
         StarknetFoundryVersion,
       )}`,
@@ -6935,17 +6993,17 @@ async function main() {
           );
         }
 
-        core.setOutput("starknet-foundry-prefix", StarknetFoundryPrefix);
-        core.addPath(external_path_default().join(StarknetFoundryPrefix, "bin"));
+        lib_core.setOutput("starknet-foundry-prefix", StarknetFoundryPrefix);
+        lib_core.addPath(external_path_default().join(StarknetFoundryPrefix, "bin"));
       },
     );
 
-    core.setOutput(
+    lib_core.setOutput(
       "starknet-fundry-version",
       await getFullVersionFromStarknetFoundry(),
     );
   } catch (err) {
-    core.setFailed(err);
+    lib_core.setFailed(err);
   }
 }
 
