@@ -15,5 +15,5 @@ outputs:
     description: The version of installed Starknet Foundry
 runs:
   using: node20
-  main: "dist/setup/index.js"
+  main: "dist/index.js"
   post-if: success()
