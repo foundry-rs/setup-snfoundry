@@ -6985,7 +6985,7 @@ async function main() {
             StarknetFoundryRepo,
             StarknetFoundryVersion,
           );
-          snforgePrefix = await tool_cache.cacheDir(
+          StarknetFoundryPrefix = await tool_cache.cacheDir(
             download,
             "starknet-foundry",
             StarknetFoundryVersion,
