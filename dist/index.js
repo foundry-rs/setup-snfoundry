@@ -29793,7 +29793,17 @@ var __webpack_exports__ = {};
 // ESM COMPAT FLAG
 __nccwpck_require__.r(__webpack_exports__);
 
+// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
+var core = __nccwpck_require__(2186);
+// EXTERNAL MODULE: ./node_modules/@actions/exec/lib/exec.js
+var exec = __nccwpck_require__(1514);
+// EXTERNAL MODULE: ./node_modules/@actions/http-client/lib/index.js
+var lib = __nccwpck_require__(6255);
 ;// CONCATENATED MODULE: ./lib/versions.js
+
+
+
+
 async function getFullVersionFromStarknetFoundry() {
   const { stdout } = await exec.getExecOutput(`snforge -V`);
   const match = stdout.match(/^snforge ([^ ]+)/);
@@ -29828,7 +29838,7 @@ function fetchLatestTag(repo) {
   return core.group(
     "Getting information about latest Scarb release from GitHub",
     async () => {
-      const http = new HttpClient("software-mansion/setup-scarb", undefined, {
+      const http = new lib.HttpClient("software-mansion/setup-scarb", undefined, {
         allowRedirects: false,
       });
 
@@ -29872,8 +29882,6 @@ var external_path_default = /*#__PURE__*/__nccwpck_require__.n(external_path_);
 ;// CONCATENATED MODULE: external "fs/promises"
 const promises_namespaceObject = require("fs/promises");
 var promises_default = /*#__PURE__*/__nccwpck_require__.n(promises_namespaceObject);
-// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
-var lib_core = __nccwpck_require__(2186);
 // EXTERNAL MODULE: ./node_modules/@actions/tool-cache/lib/tool-cache.js
 var tool_cache = __nccwpck_require__(7784);
 // EXTERNAL MODULE: external "os"
@@ -29929,7 +29937,7 @@ async function downloadStarknetFoundry(repo, version) {
   const extension = triplet.includes("-windows-") ? "zip" : "tar.gz";
   const url = `https://github.com/${repo}/releases/download/${tag}/${basename}.${extension}`;
 
-  lib_core.info(`Downloading Starknet Foundry from ${url}`);
+  core.info(`Downloading Starknet Foundry from ${url}`);
   const pathToTarball = await tool_cache.downloadTool(url);
 
   const extract = url.endsWith(".zip") ? tool_cache.extractZip : tool_cache.extractTar;
@@ -29937,7 +29945,7 @@ async function downloadStarknetFoundry(repo, version) {
 
   const pathToCli = await findStarknetFoundryDir(extractedPath);
 
-  lib_core.debug(`Extracted to ${pathToCli}`);
+  core.debug(`Extracted to ${pathToCli}`);
   return pathToCli;
 }
 
@@ -29965,7 +29973,7 @@ async function findStarknetFoundryDir(extractedPath) {
 
 async function main() {
   try {
-    const StarknetFoundryVersionInput = lib_core.getInput(
+    const StarknetFoundryVersionInput = core.getInput(
       "starknet-foundry-version",
     );
 
@@ -29976,7 +29984,7 @@ async function main() {
     );
 
     const triplet = getOsTriplet();
-    await lib_core.group(
+    await core.group(
       `Setting up Starknet Foundry ${versionWithPrefix(
         StarknetFoundryVersion,
       )}`,
@@ -29999,17 +30007,17 @@ async function main() {
           );
         }
 
-        lib_core.setOutput("starknet-foundry-prefix", StarknetFoundryPrefix);
-        lib_core.addPath(external_path_default().join(StarknetFoundryPrefix, "bin"));
+        core.setOutput("starknet-foundry-prefix", StarknetFoundryPrefix);
+        core.addPath(external_path_default().join(StarknetFoundryPrefix, "bin"));
       },
     );
 
-    lib_core.setOutput(
-      "starknet-fundry-version",
+    core.setOutput(
+      "starknet-foundry-version",
       await getFullVersionFromStarknetFoundry(),
     );
   } catch (err) {
-    lib_core.setFailed(err);
+    core.setFailed(err);
   }
 }
 
