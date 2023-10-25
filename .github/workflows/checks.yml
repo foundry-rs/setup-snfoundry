@@ -27,6 +27,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Setup scarb
+        uses: software-mansion/setup-scarb@v1
+        with:
+          scarb-version: 0.7.0
+
       - name: Test local action
         uses: ./
         with:
