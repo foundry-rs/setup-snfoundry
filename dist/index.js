@@ -6961,7 +6961,7 @@ async function findStarknetFoundryDir(extractedPath) {
 
 async function main() {
   try {
-    const StarknetFoundryVersionInput = lib_core.getInput("version");
+    const StarknetFoundryVersionInput = lib_core.getInput("starknet-foundry-version");
 
     const StarknetFoundryRepo = "foundry-rs/starknet-foundry";
     const StarknetFoundryVersion = await determineVersion(
