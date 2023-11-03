@@ -21,7 +21,7 @@ jobs:
 ## Inputs
 
 - `starknet-foundry-version` - **Optional**. String:
-  - Stating an explicit Starknet Foundry version to use, for example `"0.8.3"`.
+  - Stating an explicit Starknet Foundry version to use, for example `"0.9.1"`.
 
 ## Outputs
 
