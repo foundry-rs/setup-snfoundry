@@ -29806,7 +29806,7 @@ var lib = __nccwpck_require__(6255);
 
 async function getFullVersionFromStarknetFoundry() {
   const { stdout } = await exec.getExecOutput(`snforge -V`);
-  const match = stdout.match(/^forge ([^ ]+)/);
+  const match = stdout.match(/^snforge ([^ ]+)/);
   if (!match) {
     throw new Error(
       `unable to determine Starknet Foundry version from 'snforge -V' output: ${stdout}`,
