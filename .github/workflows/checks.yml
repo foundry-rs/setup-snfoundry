@@ -30,7 +30,7 @@ jobs:
       - name: Setup scarb
         uses: software-mansion/setup-scarb@v1
         with:
-          scarb-version: 0.7.0
+          scarb-version: 2.3.0
 
       - name: Test local action
         uses: ./
