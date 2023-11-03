@@ -21,6 +21,6 @@
   },
   "devDependencies": {
     "@vercel/ncc": "^0.38.0",
-    "prettier": "^3.0.3"
+    "prettier": "3.0.3"
   }
 }
