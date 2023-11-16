@@ -30,10 +30,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup scarb
+      - name: Get scarb version
+        id: extractScarbVersion
+        run: |
+          snfoundry_version=$(curl -s https://api.github.com/repos/foundry-rs/starknet-foundry/releases/latest | grep tarball_url | awk -F '/' '{print $8}' | tr -d '",')
+          version=$(curl -s https://raw.githubusercontent.com/foundry-rs/starknet-foundry/$snfoundry_version/.tool-versions | awk '{print $2}')
+          
+          echo "scarbVersion=$version" >> "$GITHUB_OUTPUT"
+      - name: Setup Scarb
         uses: software-mansion/setup-scarb@v1
         with:
-          scarb-version: 2.3.0
+          scarb-version: ${{ steps.extractScarbVersion.outputs.scarbVersion }}
 
       - name: Test local action
         uses: ./
