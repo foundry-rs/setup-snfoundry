@@ -29969,7 +29969,17 @@ async function downloadUniversalSierraCompiler() {
   const command =
     "curl -L https://raw.githubusercontent.com/software-mansion/universal-sierra-compiler/master/scripts/install.sh | sh";
 
-  exec(command);
+  exec(command, (error, stdout, stderr) => {
+    if (error) {
+      console.error(
+        `Error while installing \`universal-sierra-compiler\`: ${error.message}`,
+      );
+      console.error(`Stderr: ${stderr}`);
+      return;
+    }
+
+    console.log(`Successfully installed \`universal-sierra-compiler\``);
+  });
 }
 
 ;// CONCATENATED MODULE: ./lib/main.js
