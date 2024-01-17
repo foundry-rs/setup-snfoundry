@@ -29963,6 +29963,15 @@ async function findStarknetFoundryDir(extractedPath) {
   );
 }
 
+async function downloadUniversalSierraCompiler() {
+  const { exec } = __nccwpck_require__(2081);
+
+  const command =
+    "curl -L https://raw.githubusercontent.com/software-mansion/universal-sierra-compiler/master/scripts/install.sh | sh";
+
+  exec(command);
+}
+
 ;// CONCATENATED MODULE: ./lib/main.js
 
 
@@ -29995,6 +30004,7 @@ async function main() {
           triplet,
         );
         if (!StarknetFoundryPrefix) {
+          await downloadUniversalSierraCompiler();
           const download = await downloadStarknetFoundry(
             StarknetFoundryRepo,
             StarknetFoundryVersion,
