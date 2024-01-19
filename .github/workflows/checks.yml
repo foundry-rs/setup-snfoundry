@@ -47,6 +47,9 @@ jobs:
         with:
           starknet-foundry-version: latest
 
+      - name: Verify universal-sierra-compiler installation
+        run: universal-sierra-compiler --version
+
       - name: Create new project
         run: snforge init myproject
 
