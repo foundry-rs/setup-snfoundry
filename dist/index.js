@@ -29930,6 +29930,7 @@ function getOsPlatform() {
 
 
 
+
 async function downloadStarknetFoundry(repo, version) {
   const triplet = getOsTriplet();
   const tag = versionWithPrefix(version);
@@ -29964,8 +29965,6 @@ async function findStarknetFoundryDir(extractedPath) {
 }
 
 async function downloadUniversalSierraCompiler() {
-  const exec = __nccwpck_require__(1514);
-
   const scriptUrl =
     "https://raw.githubusercontent.com/software-mansion/universal-sierra-compiler/master/scripts/install.sh";
 
