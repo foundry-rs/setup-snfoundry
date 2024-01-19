@@ -29964,22 +29964,20 @@ async function findStarknetFoundryDir(extractedPath) {
 }
 
 async function downloadUniversalSierraCompiler() {
-  const { exec } = __nccwpck_require__(2081);
+  const exec = __nccwpck_require__(1514);
 
-  const command =
-    "curl -L https://raw.githubusercontent.com/software-mansion/universal-sierra-compiler/master/scripts/install.sh | sh";
+  const scriptUrl =
+    "https://raw.githubusercontent.com/software-mansion/universal-sierra-compiler/master/scripts/install.sh";
 
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.error(
-        `Error while installing \`universal-sierra-compiler\`: ${error.message}`,
-      );
-      console.error(`Stderr: ${stderr}`);
-      return;
-    }
+  try {
+    const scriptPath = await tool_cache.downloadTool(scriptUrl);
 
-    console.log(`Successfully installed \`universal-sierra-compiler\``);
-  });
+    await exec.exec(`chmod +x ${scriptPath}`);
+
+    await exec.exec(scriptPath);
+  } catch (error) {
+    core.setFailed(error.message);
+  }
 }
 
 ;// CONCATENATED MODULE: ./lib/main.js
