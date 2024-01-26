@@ -47,6 +47,12 @@ jobs:
         with:
           starknet-foundry-version: latest
 
+      - name: "Create .tool-versions file"
+        run: echo "starknet-foundry 0.15.0" >> .tool-versions
+      - name: "Setup foundry using `.tool-versions` file"
+        uses: ./
+      - run: snforge --version | grep "snforge 0.15.0"
+
       - name: Verify universal-sierra-compiler installation
         run: universal-sierra-compiler --version
 
