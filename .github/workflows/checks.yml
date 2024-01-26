@@ -65,7 +65,7 @@ jobs:
         - name: "Create .tool-versions file"
           run: echo "scarb 2.5.0 \nstarknet-foundry 0.16.0" >> .tool-versions
 
-        - name: Setup Scarb
+        - name: "Setup Scarb `.tool-versions` file"
           uses: software-mansion/setup-scarb@v1
 
         - name: "Setup foundry using `.tool-versions` file"
