@@ -47,12 +47,6 @@ jobs:
         with:
           starknet-foundry-version: latest
 
-      - name: "Create .tool-versions file"
-        run: echo "starknet-foundry 0.15.0" >> .tool-versions
-      - name: "Setup foundry using `.tool-versions` file"
-        uses: ./
-      - run: snforge --version | grep "snforge 0.15.0"
-
       - name: Verify universal-sierra-compiler installation
         run: universal-sierra-compiler --version
 
@@ -62,3 +56,36 @@ jobs:
       - name: Run tests in the project
         run: snforge test
         working-directory: myproject
+
+    test-action-with-tools-file:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+
+        - name: Get scarb version
+          id: extractScarbVersion
+          run: |
+            snfoundry_version=$(curl -s https://api.github.com/repos/foundry-rs/starknet-foundry/releases/latest | grep tarball_url | awk -F '/' '{print $8}' | tr -d '",')
+            version=$(curl -s https://raw.githubusercontent.com/foundry-rs/starknet-foundry/$snfoundry_version/.tool-versions | awk '{print $2}')
+
+            echo "scarbVersion=$version" >> "$GITHUB_OUTPUT"
+        - name: Setup Scarb
+          uses: software-mansion/setup-scarb@v1
+          with:
+            scarb-version: ${{ steps.extractScarbVersion.outputs.scarbVersion }}
+
+        - name: "Create .tool-versions file"
+          run: echo "starknet-foundry 0.15.0" >> .tool-versions
+        - name: "Setup foundry using `.tool-versions` file"
+          uses: ./
+        - run: snforge --version | grep "snforge 0.15.0"
+
+        - name: Verify universal-sierra-compiler installation
+          run: universal-sierra-compiler --version
+
+        - name: Create new project
+          run: snforge init myproject
+
+        - name: Run tests in the project
+          run: snforge test
+          working-directory: myproject
