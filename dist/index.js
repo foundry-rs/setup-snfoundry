@@ -29799,7 +29799,11 @@ var core = __nccwpck_require__(2186);
 var exec = __nccwpck_require__(1514);
 // EXTERNAL MODULE: ./node_modules/@actions/http-client/lib/index.js
 var lib = __nccwpck_require__(6255);
+;// CONCATENATED MODULE: external "fs/promises"
+const promises_namespaceObject = require("fs/promises");
+var promises_default = /*#__PURE__*/__nccwpck_require__.n(promises_namespaceObject);
 ;// CONCATENATED MODULE: ./lib/versions.js
+
 
 
 
@@ -29815,9 +29819,19 @@ async function getFullVersionFromStarknetFoundry() {
   return match[1];
 }
 
-async function determineVersion(version, repo) {
+async function determineVersion(version, toolVersionsPath, repo) {
   version = version?.trim();
   version = version ?? "latest";
+
+  if (toolVersionsPath) {
+    let toolVersion = await getVersionFromToolVersionsFile(toolVersionsPath);
+    if (!toolVersion) {
+      throw new Error(
+        `failed to read Foundry version from: ${toolVersionsPath}`,
+      );
+    }
+    version = toolVersion;
+  }
 
   if (version === "latest") {
     version = await fetchLatestTag(repo);
@@ -29876,12 +29890,21 @@ function versionWithPrefix(version) {
   return /^\d/.test(version) ? `v${version}` : version;
 }
 
+async function getVersionFromToolVersionsFile(toolVersionsPath) {
+  try {
+    toolVersionsPath = toolVersionsPath || ".tool-versions";
+    const toolVersions = await promises_default().readFile(toolVersionsPath, {
+      encoding: "utf-8",
+    });
+    return toolVersions.match(/^starknet-foundry ([\w.-]+)/m)?.[1];
+  } catch (e) {
+    return undefined;
+  }
+}
+
 // EXTERNAL MODULE: external "path"
 var external_path_ = __nccwpck_require__(1017);
 var external_path_default = /*#__PURE__*/__nccwpck_require__.n(external_path_);
-;// CONCATENATED MODULE: external "fs/promises"
-const promises_namespaceObject = require("fs/promises");
-var promises_default = /*#__PURE__*/__nccwpck_require__.n(promises_namespaceObject);
 // EXTERNAL MODULE: ./node_modules/@actions/tool-cache/lib/tool-cache.js
 var tool_cache = __nccwpck_require__(7784);
 // EXTERNAL MODULE: external "os"
@@ -29993,9 +30016,12 @@ async function main() {
       "starknet-foundry-version",
     );
 
+    const toolVersionsPathInput = core.getInput("tool-versions");
+
     const StarknetFoundryRepo = "foundry-rs/starknet-foundry";
     const StarknetFoundryVersion = await determineVersion(
       StarknetFoundryVersionInput,
+      toolVersionsPathInput,
       StarknetFoundryRepo,
     );
 
