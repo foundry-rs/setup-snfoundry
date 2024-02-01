@@ -30031,6 +30031,8 @@ async function main() {
       toolVersionsPathInput,
       StarknetFoundryRepo,
     );
+    core.setOutput("dupa", StarknetFoundryVersion);
+    core.setOutput("path", toolVersionsPathInput);
 
     const triplet = getOsTriplet();
     await core.group(
