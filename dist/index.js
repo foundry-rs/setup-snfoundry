@@ -29821,7 +29821,6 @@ async function getFullVersionFromStarknetFoundry() {
 
 async function determineVersion(version, toolVersionsPath, repo) {
   version = version?.trim();
-  version = version ?? "latest";
 
   if (version && toolVersionsPath) {
     throw new Error(
@@ -29838,6 +29837,11 @@ async function determineVersion(version, toolVersionsPath, repo) {
       );
     }
     version = toolVersion;
+  }
+
+  if (!version) {
+    let toolVersion = await getVersionFromToolVersionsFile();
+    version = toolVersion ?? "latest";
   }
 
   if (version === "latest") {
@@ -30024,6 +30028,7 @@ async function main() {
     );
 
     const toolVersionsPathInput = core.getInput("tool-versions");
+    console.log(`input ${toolVersionsPathInput}!`);
 
     const StarknetFoundryRepo = "foundry-rs/starknet-foundry";
     const StarknetFoundryVersion = await determineVersion(
@@ -30031,8 +30036,7 @@ async function main() {
       toolVersionsPathInput,
       StarknetFoundryRepo,
     );
-    core.setOutput("dupa", StarknetFoundryVersion);
-    core.setOutput("path", toolVersionsPathInput);
+    console.log(`version ${StarknetFoundryVersion}!`);
 
     const triplet = getOsTriplet();
     await core.group(
