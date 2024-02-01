@@ -30028,7 +30028,6 @@ async function main() {
     );
 
     const toolVersionsPathInput = core.getInput("tool-versions");
-    console.log(`input ${toolVersionsPathInput}!`);
 
     const StarknetFoundryRepo = "foundry-rs/starknet-foundry";
     const StarknetFoundryVersion = await determineVersion(
@@ -30036,7 +30035,6 @@ async function main() {
       toolVersionsPathInput,
       StarknetFoundryRepo,
     );
-    console.log(`version ${StarknetFoundryVersion}!`);
 
     const triplet = getOsTriplet();
     await core.group(
