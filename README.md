@@ -25,7 +25,7 @@ jobs:
   - Stating an explicit Starknet Foundry version to use, for example `"0.9.1"`.
   - Empty/not specified: the .tool-versions file will be read to resolve starknet foundry version, and in case it is not present the latest stable version will be used.
 
-- tool-versions - Optional. String.
+- `tool-versions` - Optional. String.
   - Stating a relative or absolute path to the .tool-versions file.
   - Should be used only if starknet-foundry-version is not specified.
 
