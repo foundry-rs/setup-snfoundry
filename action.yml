@@ -8,6 +8,9 @@ inputs:
   starknet-foundry-version:
     description: Starknet Foundry version to use
     required: false
+  tool-versions:
+    description: Path to .tool-versions file
+    required: false
 outputs:
   starknet-foundry-prefix:
     description: The prefix of installed Starknet Foundry
