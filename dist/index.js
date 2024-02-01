@@ -29823,11 +29823,18 @@ async function determineVersion(version, toolVersionsPath, repo) {
   version = version?.trim();
   version = version ?? "latest";
 
+  if (version && toolVersionsPath) {
+    throw new Error(
+      "the `starknet-foundry-version` and `tool-versions` inputs cannot be used simultaneously",
+    );
+  }
+
   if (toolVersionsPath) {
     let toolVersion = await getVersionFromToolVersionsFile(toolVersionsPath);
+
     if (!toolVersion) {
       throw new Error(
-        `failed to read Foundry version from: ${toolVersionsPath}`,
+        `failed to read Starknet Foundry version from: ${toolVersionsPath}`,
       );
     }
     version = toolVersion;
