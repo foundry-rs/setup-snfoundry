@@ -29821,7 +29821,6 @@ async function getFullVersionFromStarknetFoundry() {
 
 async function determineVersion(version, toolVersionsPath, repo) {
   version = version?.trim();
-  version = version ?? "latest";
 
   if (version && toolVersionsPath) {
     throw new Error(
@@ -29838,6 +29837,11 @@ async function determineVersion(version, toolVersionsPath, repo) {
       );
     }
     version = toolVersion;
+  }
+
+  if (!version) {
+    let toolVersion = await getVersionFromToolVersionsFile();
+    version = toolVersion ?? "latest";
   }
 
   if (version === "latest") {
