@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: foundry-rs/setup-snfoundry@v2
+      - uses: foundry-rs/setup-snfoundry@v3
       - run: snforge
 ```
 
