@@ -68,6 +68,9 @@ jobs:
       - name: "Setup Scarb using `.tool-versions` file"
         uses: software-mansion/setup-scarb@v1
 
+      - name: "Print .tool-versions file"
+        run: cat .tool-versions
+
       - name: "Setup foundry using `.tool-versions` file"
         uses: ./
         with:
