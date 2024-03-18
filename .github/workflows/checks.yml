@@ -70,5 +70,7 @@ jobs:
 
       - name: "Setup foundry using `.tool-versions` file"
         uses: ./
+        with:
+          tool-versions: .tool-versions
 
       - run: snforge --version | grep "snforge 0.16.0"
