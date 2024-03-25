@@ -30005,6 +30005,13 @@ async function downloadUniversalSierraCompiler() {
   try {
     const scriptPath = await tool_cache.downloadTool(scriptUrl);
 
+    const { exec } = __nccwpck_require__(2081);
+    var yourscript = exec(`sh ${scriptPath}`, (error, stdout, stderr) => {
+      if (error !== null) {
+        console.log(`exec error: ${error}`);
+      }
+    });
+
     await exec.exec(scriptPath);
   } catch (error) {
     core.setFailed(error.message);
