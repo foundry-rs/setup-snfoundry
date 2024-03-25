@@ -30005,8 +30005,6 @@ async function downloadUniversalSierraCompiler() {
   try {
     const scriptPath = await tool_cache.downloadTool(scriptUrl);
 
-    await exec.exec(`chmod +x ${scriptPath}`);
-
     await exec.exec(scriptPath);
   } catch (error) {
     core.setFailed(error.message);
