@@ -32,7 +32,7 @@ runs:
   steps:
     - name: "Setup universal-sierra-compiler"
       id: setup-usc
-      run: tomek0123456789/setup-universal-sierra-compiler
+      uses: tomek0123456789/setup-universal-sierra-compiler
       with:
         - universal-sierra-compiler-version: ${{ inputs.universal-sierra-compiler-version }}
 
