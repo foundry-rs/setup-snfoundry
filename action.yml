@@ -8,14 +8,34 @@ inputs:
   starknet-foundry-version:
     description: Starknet Foundry version to use
     required: false
+  universal-sierra-compiler-version:
+    description: universal-sierra-compiler version to use
+    required: false
   tool-versions:
     description: Path to .tool-versions file
     required: false
 outputs:
   starknet-foundry-prefix:
-    description: The prefix of installed Starknet Foundry
+    description: The prefix of the installed Starknet Foundry
+    value: ${{ steps.setup-snfoundry.outputs.starknet-foundry-prefix }}
   starknet-foundry-version:
-    description: The version of installed Starknet Foundry
+    description: The version of the installed Starknet Foundry
+    value: ${{ steps.setup-snfoundry.outputs.starknet-foundry-version }}
+  universal-sierra-compiler-prefix:
+    description: The prefix of the installed universal-sierra-compiler
+    value: ${{ steps.setup-usc.outputs.universal-sierra-compiler-prefix }}
+  universal-sierra-compiler-version:
+    description: The version of the installed universal-sierra-compiler
+    value: ${{ steps.setup-usc.outputs.universal-sierra-compiler-version }}
 runs:
-  using: node20
-  main: "dist/index.js"
+  using: "composite"
+  steps:
+    - name: "Setup universal-sierra-compiler"
+      id: setup-usc
+      run: tomek0123456789/setup-universal-sierra-compiler
+      with:
+        - universal-sierra-compiler-version: ${{ inputs.universal-sierra-compiler-version }}
+
+    - name: "Setup Starknet Foundry"
+      id: setup-snfoundry
+      run: "dist/index.js"
