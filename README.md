@@ -67,5 +67,4 @@ jobs:
           key: ${{ runner.os }}-snfoundry-${{ steps.setup-snfoundry.outputs.starknet-foundry-version }}
 ```
 
-
 [Starknet Foundry]: https://foundry-rs.github.io/starknet-foundry
