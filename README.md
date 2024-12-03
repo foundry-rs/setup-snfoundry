@@ -13,7 +13,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Starknet Foundry
         uses: foundry-rs/setup-snfoundry@v3
       - name: Check versions
@@ -52,7 +52,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Starknet Foundry
         id: setup-snfoundry
         uses: foundry-rs/setup-snfoundry@v3
@@ -61,7 +61,7 @@ jobs:
           snforge --version
           sncast --version
       - name: Cache Starknet Foundry installation
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.setup-snfoundry.outputs.starknet-foundry-prefix }}
           key: ${{ runner.os }}-snfoundry-${{ steps.setup-snfoundry.outputs.starknet-foundry-version }}
