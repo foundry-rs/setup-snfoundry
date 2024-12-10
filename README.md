@@ -2,7 +2,6 @@
 
 Sets up [Starknet Foundry] in your GitHub Actions workflow supporting caching out of the box.
 
-
 > 📝 **Note**
 > At this moment, only Linux and MacOS are supported.
 
