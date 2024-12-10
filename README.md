@@ -49,6 +49,6 @@ jobs:
   subdirectory (`${{ steps.setup-starknet-foundry.outputs.starknet-foundry-prefix }}/bin`).
 - `starknet-foundry-version` - Version of Starknet Foundry that was installed (as reported by `snforge -V`).
 
-For more information, visit [Starknet Foundry docs section](https://foundry-rs.github.io/starknet-foundry/testing/running-tests.html) dedicated to CI setup.
+For more information, visit [Starknet Foundry docs section](https://foundry-rs.github.io/starknet-foundry/appendix/starknet-foundry-github-action.html) dedicated to CI setup.
 
 [Starknet Foundry]: https://foundry-rs.github.io/starknet-foundry
