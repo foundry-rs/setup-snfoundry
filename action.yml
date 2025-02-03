@@ -17,5 +17,11 @@ outputs:
   starknet-foundry-version:
     description: The version of installed Starknet Foundry
 runs:
-  using: node20
-  main: "dist/index.js"
+  using: "composite"
+  steps:
+    - name: Set up Universal Sierra Compiler
+      uses: software-mansion/setup-universal-sierra-compiler@v1
+
+    - name: Set up Starknet Foundry
+      shell: bash
+      run: node dist/index.js

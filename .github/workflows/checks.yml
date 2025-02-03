@@ -26,12 +26,16 @@ jobs:
         run: npm run fmt:check
 
   test-action:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v3
 
       - name: Get scarb version
         id: extractScarbVersion
+        shell: bash
         run: |
           snfoundry_version=$(curl -s https://api.github.com/repos/foundry-rs/starknet-foundry/releases/latest | grep tarball_url | awk -F '/' '{print $8}' | tr -d '",')
           version=$(curl -s https://raw.githubusercontent.com/foundry-rs/starknet-foundry/$snfoundry_version/.tool-versions | awk '{print $2}')
@@ -58,11 +62,15 @@ jobs:
         working-directory: myproject
 
   test-action-with-tools-file:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v3
 
       - name: "Create .tool-versions file"
+        shell: bash
         run: echo -en 'scarb 2.5.0 \nstarknet-foundry 0.16.0' > .tool-versions
 
       - name: "Setup Scarb using `.tool-versions` file"
@@ -72,3 +80,4 @@ jobs:
         uses: ./
 
       - run: snforge --version | grep "snforge 0.16.0"
+        shell: bash

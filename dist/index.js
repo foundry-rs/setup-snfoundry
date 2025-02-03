@@ -29998,21 +29998,6 @@ async function findStarknetFoundryDir(extractedPath) {
   );
 }
 
-async function downloadUniversalSierraCompiler() {
-  const scriptUrl =
-    "https://raw.githubusercontent.com/software-mansion/universal-sierra-compiler/master/scripts/install.sh";
-
-  try {
-    const scriptPath = await tool_cache.downloadTool(scriptUrl);
-
-    await exec.exec(`chmod +x ${scriptPath}`);
-
-    await exec.exec(scriptPath);
-  } catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
 ;// CONCATENATED MODULE: ./lib/main.js
 
 
@@ -30048,7 +30033,6 @@ async function main() {
           triplet,
         );
         if (!StarknetFoundryPrefix) {
-          await downloadUniversalSierraCompiler();
           const download = await downloadStarknetFoundry(
             StarknetFoundryRepo,
             StarknetFoundryVersion,
