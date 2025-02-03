@@ -19,3 +19,13 @@ outputs:
 runs:
   using: node20
   main: "dist/index.js"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Universal Sierra Compiler
+      uses: software-mansion/setup-universal-sierra-compiler@v1
+
+    - name: "Run script"
+      run: node dist/index.js
+      shell: bash
