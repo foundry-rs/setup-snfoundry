@@ -13,8 +13,8 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: foundry-rs/setup-snfoundry@v3
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/setup-snfoundry@v4
       - run: snforge
 ```
 
