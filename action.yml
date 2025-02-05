@@ -24,4 +24,4 @@ runs:
 
     - name: Set up Starknet Foundry
       shell: bash
-      run: node dist/index.js
+      run: node $GITHUB_ACTION_PATH/dist/index.js
