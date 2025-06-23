@@ -29996,11 +29996,9 @@ async function findStarknetFoundryDir(extractedPath) {
 
 async function main() {
   try {
-    // const StarknetFoundryVersionInput = core.getInput(
-    //   "starknet-foundry-version",
-    // );
-    const StarknetFoundryVersionInput =
-      "${{ inputs.starknet-foundry-version }}";
+    const StarknetFoundryVersionInput = core.getInput(
+      "starknet-foundry-version",
+    );
 
     const toolVersionsPathInput = core.getInput("tool-versions");
 
