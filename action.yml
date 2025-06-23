@@ -25,6 +25,6 @@ runs:
     - name: Set up Starknet Foundry
       shell: bash
       run: node $GITHUB_ACTION_PATH/dist/index.js
-      env:
-        INPUT_STARKNET-FOUNDRY-VERSION: ${{ inputs.starknet-foundry-version }}
-        INPUT_TOOL-VERSIONS: ${{ inputs.tool-versions }}
+      # env:
+      #   INPUT_STARKNET-FOUNDRY-VERSION: ${{ inputs.starknet-foundry-version }}
+      #   INPUT_TOOL-VERSIONS: ${{ inputs.tool-versions }}
