@@ -29828,7 +29828,7 @@ async function determineVersion(versionFromInput, toolVersionsPath, repo) {
 
   if (versionFromInput && toolVersionsPath) {
     throw new Error(
-      "The `starknet-foundry-version` and `tool-versions` inputs cannot be used simultaneously"
+      "`starknet-foundry-version` and `tool-versions` inputs cannot be used simultaneously"
     );
   }
 
@@ -29840,7 +29840,6 @@ async function determineVersion(versionFromInput, toolVersionsPath, repo) {
 
   return version.startsWith("v") ? version.slice(1) : version;
 }
-
 
 function fetchLatestTag(repo) {
   // Note: Asking GitHub API for latest release information is the simplest solution here, but has one major drawback:
@@ -29993,17 +29992,12 @@ async function findStarknetFoundryDir(extractedPath) {
 
 
 
-
 async function main() {
   try {
-    await exec.exec("gh", ["run", "software-mansion/setup-universal-sierra-compiler@v1"]);
-
     const StarknetFoundryVersionInput = core.getInput(
       "starknet-foundry-version",
     );
-    console.log(StarknetFoundryVersionInput);
     const toolVersionsPathInput = core.getInput("tool-versions");
-    console.log(toolVersionsPathInput);
 
     const StarknetFoundryRepo = "foundry-rs/starknet-foundry";
     const StarknetFoundryVersion = await determineVersion(
