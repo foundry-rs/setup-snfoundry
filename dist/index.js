@@ -29999,7 +29999,8 @@ async function main() {
     // const StarknetFoundryVersionInput = core.getInput(
     //   "starknet-foundry-version",
     // );
-    const StarknetFoundryVersionInput = "${{ inputs.starknet-foundry-version }}";
+    const StarknetFoundryVersionInput =
+      "${{ inputs.starknet-foundry-version }}";
 
     const toolVersionsPathInput = core.getInput("tool-versions");
 
