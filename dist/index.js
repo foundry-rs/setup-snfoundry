@@ -29819,8 +29819,7 @@ async function getFullVersionFromStarknetFoundry() {
   return match[1];
 }
 
-async function determineVersion(version, toolVersionsPath, repo) {
-  const versionFromInput = version?.trim();
+async function determineVersion(versionFromInput, toolVersionsPath, repo) {
   console.log("versionFromInput", versionFromInput)
   console.log("versionFromInput.length", versionFromInput.length)
   const versionFromFile = toolVersionsPath
@@ -29999,9 +29998,11 @@ async function main() {
   try {
     // await exec.exec("gh", ["run", "software-mansion/setup-universal-sierra-compiler@v1"]);
 
-    const StarknetFoundryVersionInput = "${{ inputs.starknet-foundry-version }}";
+    const StarknetFoundryVersionInput = core.getInput(
+      "starknet-foundry-version",
+    );
     console.log(StarknetFoundryVersionInput);
-    const toolVersionsPathInput = "${{ inputs.tool-versions }}";
+    const toolVersionsPathInput = core.getInput("tool-versions");
     console.log(toolVersionsPathInput);
 
     const StarknetFoundryRepo = "foundry-rs/starknet-foundry";
