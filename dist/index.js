@@ -29820,8 +29820,6 @@ async function getFullVersionFromStarknetFoundry() {
 }
 
 async function determineVersion(versionFromInput, toolVersionsPath, repo) {
-  console.log("versionFromInput", versionFromInput)
-  console.log("versionFromInput.length", versionFromInput.length)
   const versionFromFile = toolVersionsPath
     ? await getVersionFromToolVersionsFile(toolVersionsPath)
     : await getVersionFromToolVersionsFile();
@@ -29997,6 +29995,7 @@ async function main() {
     const StarknetFoundryVersionInput = core.getInput(
       "starknet-foundry-version",
     );
+    
     const toolVersionsPathInput = core.getInput("tool-versions");
 
     const StarknetFoundryRepo = "foundry-rs/starknet-foundry";
