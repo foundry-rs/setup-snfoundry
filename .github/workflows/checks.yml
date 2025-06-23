@@ -43,15 +43,17 @@ jobs:
         with:
           scarb-version: ${{ steps.extractScarbVersion.outputs.scarbVersion }}
 
-      - name: Test local action (with fixed version)
+      - name: Setup local action (with fixed version)
         uses: ./
         with:
           starknet-foundry-version: 0.44.0
 
-      - name: Check that snforge version is correct
-        run: snforge --version | grep "snforge 0.44.0"
+      - name: Verify snforge version
+        run: |
+          VERSION=$(snforge --version)
+          [[ "$VERSION" == "snforge 0.44.0" ]]
 
-      - name: Test local action (with latest version)
+      - name: Setup local action (with latest version)
         uses: ./
 
       - name: Verify universal-sierra-compiler installation
