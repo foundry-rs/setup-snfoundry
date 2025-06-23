@@ -50,8 +50,17 @@ jobs:
 
       - name: Verify snforge version
         run: |
+          EXPECTED="snforge 0.44.0"
           VERSION=$(snforge --version)
-          [[ "$VERSION" == "snforge 0.44.0" ]]
+
+          echo "Expected version: $EXPECTED"
+          echo "Actual version:   $VERSION"
+
+          if [[ "$VERSION" != "$EXPECTED" ]]; then
+            echo "Version mismatch"
+            exit 1
+          fi
+
 
       - name: Setup local action (with latest version)
         uses: ./
