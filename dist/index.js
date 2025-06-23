@@ -29851,7 +29851,7 @@ async function determineVersion(version, toolVersionsPath, repo) {
   if (version.startsWith("v")) {
     version = version.substring(1);
   }
-
+  console.log("VERSION: ",version);
   return version;
 }
 
