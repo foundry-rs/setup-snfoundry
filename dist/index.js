@@ -29821,6 +29821,7 @@ async function getFullVersionFromStarknetFoundry() {
 
 async function determineVersion(version, toolVersionsPath, repo) {
   const versionFromInput = version?.trim();
+  console.log("versionFromInput")
   const versionFromFile = toolVersionsPath
     ? await getVersionFromToolVersionsFile(toolVersionsPath)
     : await getVersionFromToolVersionsFile();
