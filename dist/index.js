@@ -29825,7 +29825,7 @@ async function determineVersion(version, toolVersionsPath, repo) {
     ? await getVersionFromToolVersionsFile(toolVersionsPath)
     : await getVersionFromToolVersionsFile();
 
-  if (fromInput && toolVersionsPath) {
+  if (versionFromInput && toolVersionsPath) {
     throw new Error(
       "The `starknet-foundry-version` and `tool-versions` inputs cannot be used simultaneously"
     );
