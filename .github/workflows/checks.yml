@@ -46,7 +46,7 @@ jobs:
       - name: Setup local action (with fixed version)
         uses: ./
         with:
-          starknet-foundry-version: 0.44.0
+          starknet-foundry-version: 0.43.0
 
       - name: Verify snforge version
         run: |
