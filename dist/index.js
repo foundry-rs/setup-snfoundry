@@ -29995,7 +29995,7 @@ async function main() {
     const StarknetFoundryVersionInput = core.getInput(
       "starknet-foundry-version",
     );
-    
+    console.log("StarknetFoundryVersionInput", StarknetFoundryVersionInput)
     const toolVersionsPathInput = core.getInput("tool-versions");
 
     const StarknetFoundryRepo = "foundry-rs/starknet-foundry";
