@@ -29832,7 +29832,7 @@ async function determineVersion(versionFromInput, toolVersionsPath, repo) {
     );
   }
 
-  version = versionFromInput || versionFromFile || "latest";
+  let version = versionFromInput || versionFromFile || "latest";
 
   if (version === "latest") {
     version = await fetchLatestTag(repo);
