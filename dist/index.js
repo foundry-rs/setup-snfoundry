@@ -29996,14 +29996,10 @@ async function findStarknetFoundryDir(extractedPath) {
 
 async function main() {
   try {
-    console.log("core.getInput('starknet-foundry-version')",core.getInput("starknet-foundry-version"));
-    console.log("core.getInput('tool-versions')",core.getInput("tool-versions"));
-    const StarknetFoundryVersionInput = core.getInput(
-      "starknet-foundry-version",
-    );
-    console.log("StarknetFoundryVersionInput", StarknetFoundryVersionInput)
-
-    const toolVersionsPathInput = core.getInput("tool-versions");
+    const StarknetFoundryVersionInput = "${{ inputs.starknet-foundry-version }}";
+    console.log(StarknetFoundryVersionInput);
+    const toolVersionsPathInput = "${{ inputs.tool-versions }}";
+    console.log(toolVersionsPathInput);
 
     const StarknetFoundryRepo = "foundry-rs/starknet-foundry";
     const StarknetFoundryVersion = await determineVersion(
