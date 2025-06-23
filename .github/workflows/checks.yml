@@ -13,7 +13,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 20.x
@@ -28,7 +28,7 @@ jobs:
   test-action:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Get scarb version
         id: extractScarbVersion
@@ -81,7 +81,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: "Setup Scarb using `.tool-versions` file"
+      - name: "Setup Scarb
         uses: software-mansion/setup-scarb@v1
         with:
           scarb-version: 2.9.4
