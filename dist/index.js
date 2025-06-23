@@ -29819,14 +29819,18 @@ async function getFullVersionFromStarknetFoundry() {
   return match[1];
 }
 
-async function determineVersion(versionFromInput, toolVersionsPath, repo) {
+async function determineVersion(
+  versionFromInput,
+  toolVersionsPath,
+  repo,
+) {
   const versionFromFile = toolVersionsPath
     ? await getVersionFromToolVersionsFile(toolVersionsPath)
     : await getVersionFromToolVersionsFile();
 
   if (versionFromInput && toolVersionsPath) {
     throw new Error(
-      "`starknet-foundry-version` and `tool-versions` inputs cannot be used simultaneously"
+      "`starknet-foundry-version` and `tool-versions` inputs cannot be used simultaneously",
     );
   }
 
