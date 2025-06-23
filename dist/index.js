@@ -29820,40 +29820,26 @@ async function getFullVersionFromStarknetFoundry() {
 }
 
 async function determineVersion(version, toolVersionsPath, repo) {
-  version = version?.trim();
+  const versionFromInput = version?.trim();
+  const versionFromFile = toolVersionsPath
+    ? await getVersionFromToolVersionsFile(toolVersionsPath)
+    : await getVersionFromToolVersionsFile();
 
-  if (version && toolVersionsPath) {
+  if (fromInput && toolVersionsPath) {
     throw new Error(
-      "the `starknet-foundry-version` and `tool-versions` inputs cannot be used simultaneously",
+      "The `starknet-foundry-version` and `tool-versions` inputs cannot be used simultaneously"
     );
   }
 
-  if (toolVersionsPath) {
-    let toolVersion = await getVersionFromToolVersionsFile(toolVersionsPath);
-
-    if (!toolVersion) {
-      throw new Error(
-        `failed to read Starknet Foundry version from: ${toolVersionsPath}`,
-      );
-    }
-    version = toolVersion;
-  }
-
-  if (!version) {
-    let toolVersion = await getVersionFromToolVersionsFile();
-    version = toolVersion ?? "latest";
-  }
+  version = versionFromInput || versionFromFile || "latest";
 
   if (version === "latest") {
     version = await fetchLatestTag(repo);
   }
 
-  if (version.startsWith("v")) {
-    version = version.substring(1);
-  }
-  console.log("VERSION: ",version);
-  return version;
+  return version.startsWith("v") ? version.slice(1) : version;
 }
+
 
 function fetchLatestTag(repo) {
   // Note: Asking GitHub API for latest release information is the simplest solution here, but has one major drawback:
