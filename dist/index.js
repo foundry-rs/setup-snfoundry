@@ -29994,8 +29994,11 @@ async function findStarknetFoundryDir(extractedPath) {
 
 
 
+
 async function main() {
   try {
+    // await exec.exec("gh", ["run", "software-mansion/setup-universal-sierra-compiler@v1"]);
+
     const StarknetFoundryVersionInput = "${{ inputs.starknet-foundry-version }}";
     console.log(StarknetFoundryVersionInput);
     const toolVersionsPathInput = "${{ inputs.tool-versions }}";
