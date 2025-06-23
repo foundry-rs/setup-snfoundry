@@ -43,7 +43,50 @@ jobs:
         with:
           scarb-version: ${{ steps.extractScarbVersion.outputs.scarbVersion }}
 
-      - name: Setup local action (with fixed version)
+      - name: Test local action
+        uses: ./
+        with:
+          starknet-foundry-version: latest
+
+      - name: Verify universal-sierra-compiler installation
+        run: universal-sierra-compiler --version
+
+      - name: Create new project
+        run: snforge init myproject
+
+      - name: Run tests in the project
+        run: snforge test
+        working-directory: myproject
+
+  test-action-with-tools-file:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Create .tool-versions file"
+        shell: bash
+        run: echo -en 'scarb 2.5.0 \nstarknet-foundry 0.16.0' > .tool-versions
+
+      - name: "Setup Scarb using `.tool-versions` file"
+        uses: software-mansion/setup-scarb@v1
+
+      - name: "Setup foundry using `.tool-versions` file"
+        uses: ./
+
+      - run: snforge --version | grep "snforge 0.16.0"
+        shell: bash
+
+  test-action-with-fixed-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Setup Scarb using `.tool-versions` file"
+        uses: software-mansion/setup-scarb@v1
+        with:
+          scarb-version: 2.9.4
+
+      - name: "Setup foundry using fixed version"
         uses: ./
         with:
           starknet-foundry-version: 0.44.0
@@ -60,35 +103,3 @@ jobs:
             echo "Version mismatch"
             exit 1
           fi
-
-
-      - name: Setup local action (with latest version)
-        uses: ./
-
-      - name: Verify universal-sierra-compiler installation
-        run: universal-sierra-compiler --version
-
-      - name: Create new project
-        run: snforge init myproject
-
-      - name: Run tests in the project
-        run: snforge test
-        working-directory: myproject
-
-  test-action-with-tools-file:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: "Create .tool-versions file"
-        shell: bash
-        run: echo -en 'scarb 2.5.0 \nstarknet-foundry 0.16.0' > .tool-versions
-
-      - name: "Setup Scarb using `.tool-versions` file"
-        uses: software-mansion/setup-scarb@v1
-
-      - name: "Setup foundry using `.tool-versions` file"
-        uses: ./
-
-      - run: snforge --version | grep "snforge 0.16.0"
-        shell: bash
