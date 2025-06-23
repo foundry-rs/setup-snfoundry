@@ -46,7 +46,7 @@ jobs:
       - name: Test local action
         uses: ./
         with:
-          starknet-foundry-version: 0.44.0
+          starknet-foundry-version: latest
 
       - name: Verify universal-sierra-compiler installation
         run: universal-sierra-compiler --version

@@ -29996,7 +29996,7 @@ async function findStarknetFoundryDir(extractedPath) {
 
 async function main() {
   try {
-    // await exec.exec("gh", ["run", "software-mansion/setup-universal-sierra-compiler@v1"]);
+    await exec.exec("gh", ["run", "software-mansion/setup-universal-sierra-compiler@v1"]);
 
     const StarknetFoundryVersionInput = core.getInput(
       "starknet-foundry-version",
