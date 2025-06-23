@@ -91,6 +91,7 @@ jobs:
         with:
           starknet-foundry-version: 0.44.0
 
+
       - name: Verify snforge version
         run: |
           EXPECTED="snforge 0.44.0"
