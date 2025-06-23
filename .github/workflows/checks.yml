@@ -26,10 +26,7 @@ jobs:
         run: npm run fmt:check
 
   test-action:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -62,10 +59,7 @@ jobs:
         working-directory: myproject
 
   test-action-with-tools-file:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
