@@ -29949,8 +29949,6 @@ function getOsPlatform() {
       return "unknown-linux-gnu";
     case "darwin":
       return "apple-darwin";
-    case "win32":
-      return "pc-windows-msvc";
     default:
       throw new Error(`unsupported host platform: ${platform}`);
   }
@@ -29969,7 +29967,7 @@ async function downloadStarknetFoundry(repo, version) {
   const triplet = getOsTriplet();
   const tag = versionWithPrefix(version);
   const basename = `starknet-foundry-${tag}-${triplet}`;
-  const extension = triplet.includes("-windows-") ? "zip" : "tar.gz";
+  const extension = "tar.gz";
   const url = `https://github.com/${repo}/releases/download/${tag}/${basename}.${extension}`;
 
   core.info(`Downloading Starknet Foundry from ${url}`);
