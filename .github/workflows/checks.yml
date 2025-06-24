@@ -13,7 +13,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 20.x
@@ -28,7 +28,7 @@ jobs:
   test-action:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Get scarb version
         id: extractScarbVersion
@@ -61,7 +61,7 @@ jobs:
   test-action-with-tools-file:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: "Create .tool-versions file"
         shell: bash
@@ -75,3 +75,31 @@ jobs:
 
       - run: snforge --version | grep "snforge 0.16.0"
         shell: bash
+
+  test-action-with-fixed-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Setup Scarb"
+        uses: software-mansion/setup-scarb@v1
+        with:
+          scarb-version: 2.9.4
+
+      - name: "Setup foundry using fixed version"
+        uses: ./
+        with:
+          starknet-foundry-version: 0.44.0
+
+      - name: Verify snforge version
+        run: |
+          EXPECTED="snforge 0.44.0"
+          VERSION=$(snforge --version)
+
+          echo "Expected version: $EXPECTED"
+          echo "Actual version:   $VERSION"
+
+          if [[ "$VERSION" != "$EXPECTED" ]]; then
+            echo "Version mismatch"
+            exit 1
+          fi

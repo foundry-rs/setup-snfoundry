@@ -29824,12 +29824,12 @@ async function determineVersion(version, toolVersionsPath, repo) {
 
   if (version && toolVersionsPath) {
     throw new Error(
-      "the `starknet-foundry-version` and `tool-versions` inputs cannot be used simultaneously",
+      "`starknet-foundry-version` and `tool-versions` inputs cannot be used simultaneously",
     );
   }
 
   if (toolVersionsPath) {
-    let toolVersion = await getVersionFromToolVersionsFile(toolVersionsPath);
+    const toolVersion = await getVersionFromToolVersionsFile(toolVersionsPath);
 
     if (!toolVersion) {
       throw new Error(
@@ -29840,7 +29840,7 @@ async function determineVersion(version, toolVersionsPath, repo) {
   }
 
   if (!version) {
-    let toolVersion = await getVersionFromToolVersionsFile();
+    const toolVersion = await getVersionFromToolVersionsFile();
     version = toolVersion ?? "latest";
   }
 
@@ -29848,11 +29848,7 @@ async function determineVersion(version, toolVersionsPath, repo) {
     version = await fetchLatestTag(repo);
   }
 
-  if (version.startsWith("v")) {
-    version = version.substring(1);
-  }
-
-  return version;
+  return version.startsWith("v") ? version.slice(1) : version;
 }
 
 function fetchLatestTag(repo) {
