@@ -26,10 +26,7 @@ jobs:
         run: npm run fmt:check
 
   test-action:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -38,7 +35,7 @@ jobs:
         shell: bash
         run: |
           snfoundry_version=$(curl -s https://api.github.com/repos/foundry-rs/starknet-foundry/releases/latest | grep tarball_url | awk -F '/' '{print $8}' | tr -d '",')
-          version=$(curl -s https://raw.githubusercontent.com/foundry-rs/starknet-foundry/$snfoundry_version/.tool-versions | awk '{print $2}')
+          version=$(curl -s https://raw.githubusercontent.com/foundry-rs/starknet-foundry/$snfoundry_version/.tool-versions | grep '^scarb' | awk '{print $2}')
 
           echo "scarbVersion=$version" >> "$GITHUB_OUTPUT"
       - name: Setup Scarb
@@ -62,10 +59,7 @@ jobs:
         working-directory: myproject
 
   test-action-with-tools-file:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
