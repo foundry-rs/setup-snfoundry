@@ -29819,22 +29819,30 @@ async function getFullVersionFromStarknetFoundry() {
   return match[1];
 }
 
-async function determineVersion(
-  versionFromInput,
-  toolVersionsPath,
-  repo,
-) {
-  const versionFromFile = toolVersionsPath
-    ? await getVersionFromToolVersionsFile(toolVersionsPath)
-    : await getVersionFromToolVersionsFile();
+async function determineVersion(version, toolVersionsPath, repo) {
+  version = version?.trim();
 
-  if (versionFromInput && toolVersionsPath) {
+  if (version && toolVersionsPath) {
     throw new Error(
       "`starknet-foundry-version` and `tool-versions` inputs cannot be used simultaneously",
     );
   }
 
-  let version = versionFromInput || versionFromFile || "latest";
+  if (toolVersionsPath) {
+    const toolVersion = await getVersionFromToolVersionsFile(toolVersionsPath);
+
+    if (!toolVersion) {
+      throw new Error(
+        `failed to read Starknet Foundry version from: ${toolVersionsPath}`,
+      );
+    }
+    version = toolVersion;
+  }
+
+  if (!version) {
+    const toolVersion = await getVersionFromToolVersionsFile();
+    version = toolVersion ?? "latest";
+  }
 
   if (version === "latest") {
     version = await fetchLatestTag(repo);
