@@ -29958,13 +29958,13 @@ function getOsPlatform() {
 
 
 
-
-async function downloadStarknetFoundry(repo, version) {
+async function downloadStarknetFoundry(repo, repoNightly, version) {
   const triplet = getOsTriplet();
   const tag = versionWithPrefix(version);
   const basename = `starknet-foundry-${tag}-${triplet}`;
   const extension = "tar.gz";
-  const url = `https://github.com/${repo}/releases/download/${tag}/${basename}.${extension}`;
+  const urlRepo = version.startsWith("nightly") ? repoNightly : repo;
+  const url = `https://github.com/${urlRepo}/releases/download/${tag}/${basename}.${extension}`;
 
   core.info(`Downloading Starknet Foundry from ${url}`);
   const pathToTarball = await tool_cache.downloadTool(url);
@@ -30005,10 +30005,12 @@ async function main() {
     const StarknetFoundryVersionInput = core.getInput(
       "starknet-foundry-version",
     );
-
     const toolVersionsPathInput = core.getInput("tool-versions");
 
     const StarknetFoundryRepo = "foundry-rs/starknet-foundry";
+    const StarknetFoundryNightlyRepo =
+      "software-mansion-labs/starknet-foundry-nightlies";
+
     const StarknetFoundryVersion = await determineVersion(
       StarknetFoundryVersionInput,
       toolVersionsPathInput,
@@ -30029,6 +30031,7 @@ async function main() {
         if (!StarknetFoundryPrefix) {
           const download = await downloadStarknetFoundry(
             StarknetFoundryRepo,
+            StarknetFoundryNightlyRepo,
             StarknetFoundryVersion,
           );
           StarknetFoundryPrefix = await tool_cache.cacheDir(
